@@ -29,7 +29,9 @@ public class AudioFile {
 	}
 	
 	
-	
+	public static void main() {
+		
+	}
 	
 }
 
