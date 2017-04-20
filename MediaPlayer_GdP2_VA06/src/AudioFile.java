@@ -10,8 +10,14 @@ public class AudioFile {
 	private String title = null;
 	
 	/* ------------------------------------------------- */
-	// Constructor
+	// Constructors
 	public AudioFile() {
+	}
+	
+	public AudioFile(String input) {
+		parsePathname(input);
+		parseFilename(input);
+		getFilename();
 	}
 	
 	/* ------------------------------------------------- */
@@ -114,8 +120,18 @@ public class AudioFile {
 		return title;
 	}
 	
+	public String toString() {
+		// no author available: return "title"
+		// else:				return "author - title"
+		if (getAuthor().isEmpty()) {
+			return getTitle();
+		} else {
+			return getAuthor() + " - " + getTitle();
+		}
+		
+	}
 	
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		AudioFile audioFile = new AudioFile();
 		AudioFile audioFile2 = new AudioFile();
 		AudioFile audioFile3 = new AudioFile();
@@ -126,26 +142,7 @@ public class AudioFile {
 		AudioFile audioFile8 = new AudioFile();
 		AudioFile audioFile9 = new AudioFile();
 		
-		/*
-		audioFile.parsePathname("");
-		System.out.println("Pathname: " + audioFile.pathName);
-		System.out.println("Filename: " + audioFile.getFilename() + "\n");
-		audioFile2.parsePathname("        				");
-		System.out.println("Pathname: " + audioFile2.pathName);
-		System.out.println("Filename: " + audioFile2.getFilename() + "\n");
-		audioFile3.parsePathname("file.mp3");
-		System.out.println("Pathname: " + audioFile3.pathName);
-		System.out.println("Filename: " + audioFile3.getFilename() + "\n");
-		audioFile4.parsePathname("/my-tmp/file.mp3");
-		System.out.println("Pathname: " + audioFile4.pathName);
-		System.out.println("Filename: " + audioFile4.getFilename() + "\n");
-		audioFile5.parsePathname("//my-tmp////part1//file.mp3/");
-		System.out.println("Pathname: " + audioFile5.pathName);
-		System.out.println("Filename: " + audioFile5.getFilename() + "\n");
-		audioFile6.parsePathname("d:\\\\part1///file.mp3");
-		System.out.println("Pathname: " + audioFile6.pathName);
-		System.out.println("Filename: " + audioFile6.getFilename() + "\n");
-		*/
+		
 		System.out.println("-------------------------------------------------------------\n");
 		audioFile.parseFilename(" Falco  -  Rock me    Amadeus .mp3  ");
 		System.out.println("Input:  Falco  -  Rock me    Amadeus .mp3  \n");
@@ -201,5 +198,6 @@ public class AudioFile {
 		System.out.println("Title: " + audioFile9.title + "\n");
 		
 	}
+	*/
 	
 }
