@@ -16,8 +16,7 @@ public class AudioFile {
 	
 	public AudioFile(String input) {
 		parsePathname(input);
-		parseFilename(input);
-		getFilename();
+		parseFilename(getFilename());
 	}
 	
 	/* ------------------------------------------------- */
@@ -68,8 +67,6 @@ public class AudioFile {
 			fileNameIndex = pathName.lastIndexOf(sep);
 			fileName = pathName.substring(fileNameIndex + 1);
 		}
-		
-		
 	}
 	
 	// modify Filename
@@ -90,15 +87,14 @@ public class AudioFile {
 		} else {
 			author = "";
 			title = fileStr;
+			title = title.trim();
 		}
 		
 		// remove type of file-appendix and trim (if: prevent out-of-bounds-error)
 		if (title.contains(".")) {
 			title = title.substring(0, title.lastIndexOf("."));
 			title = title.trim();
-		}
-		
-		
+		}		
 	}
 	
 	
@@ -130,74 +126,4 @@ public class AudioFile {
 		}
 		
 	}
-	
-/*	public static void main(String[] args) {
-		AudioFile audioFile = new AudioFile();
-		AudioFile audioFile2 = new AudioFile();
-		AudioFile audioFile3 = new AudioFile();
-		AudioFile audioFile4 = new AudioFile();
-		AudioFile audioFile5 = new AudioFile();
-		AudioFile audioFile6 = new AudioFile();
-		AudioFile audioFile7 = new AudioFile();
-		AudioFile audioFile8 = new AudioFile();
-		AudioFile audioFile9 = new AudioFile();
-		
-		
-		System.out.println("-------------------------------------------------------------\n");
-		audioFile.parseFilename(" Falco  -  Rock me    Amadeus .mp3  ");
-		System.out.println("Input:  Falco  -  Rock me    Amadeus .mp3  \n");
-		System.out.println("Author: " + audioFile.author + "\n");
-		System.out.println("Title: " + audioFile.title + "\n");
-		
-		System.out.println("-------------------------------------------------------------\n");
-		audioFile2.parseFilename("Frankie Goes To Hollywood - The Power Of Love.ogg");
-		System.out.println("Frankie Goes To Hollywood - The Power Of Love.ogg\n");
-		System.out.println("Author: " + audioFile2.author + "\n");
-		System.out.println("Title: " + audioFile2.title + "\n");
-		
-		System.out.println("-------------------------------------------------------------\n");
-		audioFile3.parseFilename("audiofile.aux");
-		System.out.println("audiofile.aux\n");
-		System.out.println("Author: " + audioFile3.author + "\n");
-		System.out.println("Title: " + audioFile3.title + "\n");
-		
-		System.out.println("-------------------------------------------------------------\n");
-		audioFile4.parseFilename("   A.U.T.O.R   -  T.I.T.E.L  .EXTENSION");
-		System.out.println("   A.U.T.O.R   -  T.I.T.E.L  .EXTENSION\n");
-		System.out.println("Author: " + audioFile4.author + "\n");
-		System.out.println("Title: " + audioFile4.title + "\n");
-		
-		System.out.println("-------------------------------------------------------------\n");
-		audioFile5.parseFilename("Hans-Georg Sonstwas - Blue-eyed boy-friend.mp3");
-		System.out.println("Hans-Georg Sonstwas - Blue-eyed boy-friend.mp3\n");
-		System.out.println("Author: " + audioFile5.author + "\n");
-		System.out.println("Title: " + audioFile5.title + "\n");
-		
-		System.out.println("-------------------------------------------------------------\n");
-		audioFile6.parseFilename(".mp3");
-		System.out.println(".mp3\n");
-		System.out.println("Author: " + audioFile6.author + "\n");
-		System.out.println("Title: " + audioFile6.title + "\n");
-		
-		System.out.println("-------------------------------------------------------------\n");
-		audioFile7.parseFilename("Falco - Rock me Amadeus.");
-		System.out.println("Falco - Rock me Amadeus.\n");
-		System.out.println("Author: " + audioFile7.author + "\n");
-		System.out.println("Title: " + audioFile7.title + "\n");
-		
-		System.out.println("-------------------------------------------------------------\n");
-		audioFile8.parseFilename("-");
-		System.out.println("-\n");
-		System.out.println("Author: " + audioFile8.author + "\n");
-		System.out.println("Title: " + audioFile8.title + "\n");
-		
-		System.out.println("-------------------------------------------------------------\n");
-		audioFile9.parseFilename(" - ");
-		System.out.println(" - \n");
-		System.out.println("Author: " + audioFile9.author + "\n");
-		System.out.println("Title: " + audioFile9.title + "\n");
-		
-	}
-	*/
-	
 }
