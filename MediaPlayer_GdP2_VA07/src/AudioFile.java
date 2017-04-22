@@ -1,6 +1,6 @@
 import java.io.File;
 
-public class AudioFile {
+public abstract class AudioFile {
 
 	/* ------------------------------------------------- */
 	// Globals
@@ -10,6 +10,14 @@ public class AudioFile {
 	private String title = null;
 	
 	/* ------------------------------------------------- */
+	// abstract functions
+	public abstract void play();
+	public abstract void togglePause();
+	public abstract void stop();
+	public abstract String getFormattedDuration();
+	public abstract String getFormattedPosition();
+	
+	/* ------------------------------------------------- */
 	// Constructors
 	public AudioFile() {
 	}
@@ -17,10 +25,15 @@ public class AudioFile {
 	public AudioFile(String input) {
 		parsePathname(input);
 		parseFilename(getFilename());
+		
+		// check if Path is viable
+		File path = new File(getPathname());
+		if (!(path.canRead())) {
+			throw new RuntimeException("\nPath is not readable\n:" + path);
+		}
 	}
 	
 	/* ------------------------------------------------- */
-	
 	// function to check if Windows OS
 	private boolean isWindows() {
 		return System.getProperty("os.name").toLowerCase().indexOf("win") >= 0;
@@ -97,7 +110,6 @@ public class AudioFile {
 		}		
 	}
 	
-	
 	/* ------------------------------------------------- */
 	// Getters
 	public String getPathname() {
@@ -125,5 +137,10 @@ public class AudioFile {
 			return getAuthor() + " - " + getTitle();
 		}
 		
+	}
+	
+	public static void main (String[] args) {
+	//	AudioFile af = new AudioFile(" Falco  -  Rock me    Amadeus .mp3  ");
+	//	System.out.println(af.getAuthor());
 	}
 }
