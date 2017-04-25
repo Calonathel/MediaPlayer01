@@ -138,9 +138,5 @@ public abstract class AudioFile {
 		}
 		
 	}
-	
-	public static void main (String[] args) {
-	//	AudioFile af = new AudioFile(" Falco  -  Rock me    Amadeus .mp3  ");
-	//	System.out.println(af.getAuthor());
-	}
+
 }
