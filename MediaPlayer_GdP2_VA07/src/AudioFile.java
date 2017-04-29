@@ -5,9 +5,11 @@ public abstract class AudioFile {
 	/* ------------------------------------------------- */
 	// Globals
 	private String pathName = null;
-	private String fileName = null;
-	private String author = null;
-	private String title = null;
+	protected String fileName = null;
+	protected String author = null;
+	protected String title = null;
+	protected String album = null;
+	protected long duration = 0;
 	
 	/* ------------------------------------------------- */
 	// abstract functions
