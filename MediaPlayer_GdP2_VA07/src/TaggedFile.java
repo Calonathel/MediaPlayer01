@@ -1,9 +1,11 @@
 import java.util.Map;
-
-import studiplayer.basic.BasicPlayer;
 import studiplayer.basic.TagReader;
 
-public class TaggedFile extends AudioFile {
+public class TaggedFile extends SampledFile {
+	
+	/* ------------------------------------------------- */
+	// locals
+	protected String album = null;
 
 	/* ------------------------------------------------- */
 	// Constructors
@@ -13,64 +15,15 @@ public class TaggedFile extends AudioFile {
 	
 	public TaggedFile(String input) {
 		super(input);
-		readAndStoreTags(getFilename());
+		readAndStoreTags(getPathname());
 	}
-	
-	
 	
 	/* ------------------------------------------------- */
-	// start playing the song
-	public void play() {
-		BasicPlayer.play(getPathname());
-	}
-	
-	// toggle pause
-	public void togglePause() {
-		BasicPlayer.togglePause();
-	}
-	
-	// stop playing the song
-	public void stop() {
-		BasicPlayer.stop();
-	}
-	
-	// format time components
-	public static String timeFormatter(long microtime) {
-		long minutes = 0, seconds = 0;
-		long converter = 1000000;
-		String output = null;
-		
-		// convert microseconds to seconds
-		seconds = (long) (microtime/converter);
-		
-		// catch error
-		// negative time value
-		if (seconds < 0) {
-			throw new RuntimeException("Negative time value provided");
-		}
-
-		// convert seconds to minutes if possible
-		while (seconds >= 60) {
-			seconds -= 60;
-			minutes += 1;
-		}
-		
-		// catch error
-		// time value is more than 59:59
-		if ((minutes > 59) || (seconds > 59)) {
-			throw new RuntimeException("Time value exceeds allowed format");
-		}
-	
-		// format the string to mm:ss format and return
-		output = String.format("%02d:%02d", minutes, seconds);
-		return output;	
-	}
-	
 	// read and store tags of file
-	public void readAndStoreTags(String pathname) {
+	public void readAndStoreTags(String inputPath) {
 		
 		// map the tags
-		Map<String, Object> tag_map = TagReader.readTags(pathname);
+		Map<String, Object> tag_map = TagReader.readTags(inputPath);
 		
 		// loop through the tags
 		for (String key : tag_map.keySet()) {
@@ -91,28 +44,35 @@ public class TaggedFile extends AudioFile {
 				album = album.trim();
 			}
 			// duration (check for null String and value 0
-			if (key.equals("album") && (!(tag_map.get(key).equals(null)) || !(tag_map.get(key).equals("0")))) {
+			if (key.equals("duration") && (!(tag_map.get(key).equals(null)) || !(tag_map.get(key).equals("0")))) {
 				duration = (long) tag_map.get(key);
 			}
-		}
-		
+		}	
 	}
 	
-
+	// store attributes of the song (author-title-album-duration) in an array
+	public String[] fields() {
+		// populate with tags
+		store[0] = getAuthor();
+		store[1] = getTitle();
+		store[2] = getAlbum();
+		store[3] = getFormattedDuration();	
+		return store;
+	}
 	
 	/* ------------------------------------------------- */
 	// Getters
-	
-	public String getFormattedDuration() {
-		return "";
+	public String getAlbum() {
+		return album;
 	}
 	
-	public String getFormattedPosition() {
-		return "";
-	}
-	
-	public static void main (String[] args) {
-		TaggedFile.timeFormatter(3600002000L);
+	/* ------------------------------------------------- */
+	public String toString() {
+		if (album.isEmpty()) {
+			return (super.toString() + " - " + getFormattedDuration());
+		} else {
+			return (super.toString() + " - " + album + " - " + getFormattedDuration() );
+		}
 	}
 	
 }

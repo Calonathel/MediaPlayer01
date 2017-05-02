@@ -8,8 +8,9 @@ public abstract class AudioFile {
 	protected String fileName = null;
 	protected String author = null;
 	protected String title = null;
-	protected String album = null;
+	protected String[] store = new String[4];
 	protected long duration = 0;
+
 	
 	/* ------------------------------------------------- */
 	// abstract functions
@@ -18,6 +19,7 @@ public abstract class AudioFile {
 	public abstract void stop();
 	public abstract String getFormattedDuration();
 	public abstract String getFormattedPosition();
+	public abstract String[] fields();
 	
 	/* ------------------------------------------------- */
 	// Constructors
