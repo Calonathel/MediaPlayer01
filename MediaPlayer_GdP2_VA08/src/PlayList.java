@@ -1,6 +1,13 @@
+import java.io.File;
+import java.io.FileWriter;
+
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Scanner;
+import java.io.IOException;
+import java.util.Date;
 
+@SuppressWarnings("serial")
 public class PlayList extends LinkedList<AudioFile> {
 
 	/* ------------------------------------------------- */
@@ -13,6 +20,13 @@ public class PlayList extends LinkedList<AudioFile> {
 	public PlayList() {
 		currentIndex = 0;
 		randomOrderAttribute = false; // standard is squential playback
+	}
+	
+	public PlayList(String pathname) {
+		// call empty constructor
+		this();
+		// load M3U file
+		loadFromM3U(pathname);
 	}
 	
 	/* ------------------------------------------------- */
@@ -71,4 +85,72 @@ public class PlayList extends LinkedList<AudioFile> {
 			}
 		}
 	}
+
+	
+	// save playlist as m3u text file
+	public void saveAsM3U (String pathname) {
+		// instantiate a date object (for extra exercise)
+		Date date = new Date();
+		// create empty filewriter object
+		FileWriter writer = null;
+		// write lines to file using line.separator
+		String linesep = System.getProperty("line.separator");		// String linesep = "\n"
+		
+		try {
+			// create a FileWriter
+			writer = new FileWriter(pathname);
+			// what to write to file
+			// loop through elements of the created playlist objects and write it to file 'pathname'
+			for (int i = 0; i < this.size(); i++) {
+				writer.write(this.get(i).getPathname() + linesep);
+				// also add author and timestamp
+				writer.write("# Phil Z " + date.toString() + linesep);
+			}
+		} catch (IOException e) {
+			// catch excpetion e
+			throw new RuntimeException("Unable to write to file " + pathname + ":" + e.getMessage());
+		} finally {
+			try {
+				// close file handle in any case!!
+				writer.close();
+				} catch (Exception e) {
+					// just swallow any exception caused by the 'finally' block
+				}
+			}
+		}
+	
+	// load playlist from m3u text file
+	public void loadFromM3U (String pathname) {
+		// create empty scanner object
+		Scanner scanner = null;
+		String line;
+		
+		try {
+			// create a Scanner
+			scanner = new Scanner(new File(pathname));
+			// clear already stored playlist
+			this.clear();
+			// get paths from the file, store them in 'line' and then add them to AudioFileFactory
+			while (scanner.hasNextLine()) {
+				line = scanner.nextLine().trim();
+				// check if lines are empty or if it is a comment (starts with '#')
+				if (!(line.isEmpty()) && !(line.startsWith("#"))) {
+					// add to AudioFileFactory
+					this.add(AudioFileFactory.getInstance(line));
+				}
+			}
+		} catch (IOException e) {
+			// catch exception
+			throw new RuntimeException(e);
+		} finally {
+			// close file handle in any case!
+			try {
+				scanner.close();
+			} catch (Exception e) {
+				// just swallow any exception caused by the 'finally' block
+			}
+		}
+	}
 }
+	
+
