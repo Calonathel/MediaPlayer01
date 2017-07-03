@@ -135,8 +135,13 @@ public class PlayList extends LinkedList<AudioFile> {
 				line = scanner.nextLine().trim();
 				// check if lines are empty or if it is a comment (starts with '#')
 				if (!(line.isEmpty()) && !(line.startsWith("#"))) {
-					// add to AudioFileFactory
-					this.add(AudioFileFactory.getInstance(line));
+					try {
+						// add to AudioFileFactory
+						this.add(AudioFileFactory.getInstance(line));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					
 				}
 			}
 		} catch (IOException e) {

@@ -13,41 +13,46 @@ public class TaggedFile extends SampledFile {
 		super();
 	}
 	
-	public TaggedFile(String input) {
+	public TaggedFile(String input) throws NotPlayableException {
 		super(input);
 		readAndStoreTags(getPathname());
 	}
 	
 	/* ------------------------------------------------- */
 	// read and store tags of file
-	public void readAndStoreTags(String inputPath) {
+	public void readAndStoreTags(String inputPath) throws NotPlayableException {
 		
-		// map the tags
-		Map<String, Object> tag_map = TagReader.readTags(inputPath);
+		try {
+			// map the tags
+			Map<String, Object> tag_map = TagReader.readTags(inputPath);
+			
+			// loop through the tags
+			for (String key : tag_map.keySet()) {
+				// check title, author, album and duration and if not empty or null - store appropriately
+				//title (check for null String and empty String)
+				if (key.equals("title") && (!(tag_map.get(key).equals(null)) || !(tag_map.get(key).equals("")))) {
+					title = (String) tag_map.get(key);
+					title = title.trim();
+				}
+				// author (check for null String and empty String)
+				if (key.equals("author") && (!(tag_map.get(key).equals(null)) || !(tag_map.get(key).equals("")))) {
+					author = (String) tag_map.get(key);
+					author = author.trim();
+				}
+				// album (check for null String and empty String)
+				if (key.equals("album") && (!(tag_map.get(key).equals(null)) || !(tag_map.get(key).equals("")))) {
+					album = (String) tag_map.get(key);
+					album = album.trim();
+				}
+				// duration (check for null String and value 0
+				if (key.equals("duration") && (!(tag_map.get(key).equals(null)) || !(tag_map.get(key).equals("0")))) {
+					duration = (long) tag_map.get(key);
+				}
+			}	
+		} catch (Exception e) {
+			throw new NotPlayableException(getPathname(), e);
+		}
 		
-		// loop through the tags
-		for (String key : tag_map.keySet()) {
-			// check title, author, album and duration and if not empty or null - store appropriately
-			//title (check for null String and empty String)
-			if (key.equals("title") && (!(tag_map.get(key).equals(null)) || !(tag_map.get(key).equals("")))) {
-				title = (String) tag_map.get(key);
-				title = title.trim();
-			}
-			// author (check for null String and empty String)
-			if (key.equals("author") && (!(tag_map.get(key).equals(null)) || !(tag_map.get(key).equals("")))) {
-				author = (String) tag_map.get(key);
-				author = author.trim();
-			}
-			// album (check for null String and empty String)
-			if (key.equals("album") && (!(tag_map.get(key).equals(null)) || !(tag_map.get(key).equals("")))) {
-				album = (String) tag_map.get(key);
-				album = album.trim();
-			}
-			// duration (check for null String and value 0
-			if (key.equals("duration") && (!(tag_map.get(key).equals(null)) || !(tag_map.get(key).equals("0")))) {
-				duration = (long) tag_map.get(key);
-			}
-		}	
 	}
 	
 	// store attributes of the song (author-title-album-duration) in an array

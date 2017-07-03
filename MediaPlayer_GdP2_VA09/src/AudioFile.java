@@ -14,7 +14,7 @@ public abstract class AudioFile {
 	
 	/* ------------------------------------------------- */
 	// abstract functions
-	public abstract void play();
+	public abstract void play() throws NotPlayableException;
 	public abstract void togglePause();
 	public abstract void stop();
 	public abstract String getFormattedDuration();
@@ -26,14 +26,21 @@ public abstract class AudioFile {
 	public AudioFile() {
 	}
 	
-	public AudioFile(String input) {
+	@SuppressWarnings("unused")
+	public AudioFile(String input) throws NotPlayableException {
+		
+		// handle NotPlayableException
+		if (this == null) {
+			throw new NotPlayableException(input, "File not accessible");
+		}
+		
 		parsePathname(input);
 		parseFilename(getFilename());
 		
 		// check if Path is viable
 		File path = new File(getPathname());
 		if (!(path.canRead())) {
-			throw new RuntimeException("\nPath is not readable\n:" + path);
+			throw new NotPlayableException(getPathname(), "Path is not readable");
 		}
 	}
 	
@@ -132,6 +139,8 @@ public abstract class AudioFile {
 		return title;
 	}
 	
+	
+	// toString
 	public String toString() {
 		// no author available: return "title"
 		// else:				return "author - title"

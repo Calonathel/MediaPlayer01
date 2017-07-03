@@ -3,7 +3,8 @@ import java.io.File;
 public class AudioFileFactory {
 
 	// create a WavFile or TaggedFile based on path-endings
-	public static AudioFile getInstance (String pathname) {
+	public static AudioFile getInstance (String pathname) throws NotPlayableException {
+		
 		// create empty AudioFile
 		AudioFile audiofile = null;
 		
@@ -19,11 +20,11 @@ public class AudioFileFactory {
 				audiofile = new TaggedFile(pathname);
 			} else {
 				// catch errors
-				throw new RuntimeException("Unknown suffix for AudioFile: \"" + pathname + "\"");
+				throw new NotPlayableException(pathname, "Unknown suffix for AudioFile");
 			}
 		} else {
 			// file not readable
-			throw new RuntimeException ("File can't be read: " + pathname);
+			throw new NotPlayableException (pathname, "File can't be read");
 		}
 		// return created AudioFile
 		return audiofile;

@@ -8,7 +8,7 @@ public class WavFile extends SampledFile {
 		super();
 	}
 	
-	public WavFile(String path) {
+	public WavFile(String path) throws NotPlayableException {
 		super(path);
 		readAndSetDurationFromFile(super.getPathname());
 	}
@@ -22,13 +22,17 @@ public class WavFile extends SampledFile {
 	}
 	
 	// read and set duration from file
-	public void readAndSetDurationFromFile(String inputStr) {
-		
-		// read parameters out of file
-		WavParamReader.readParams(inputStr);
-		
-		// store computed duration
-		duration = computeDuration(WavParamReader.getNumberOfFrames(), WavParamReader.getFrameRate());
+	public void readAndSetDurationFromFile(String inputStr) throws NotPlayableException {
+		try {
+			// read parameters out of file
+			WavParamReader.readParams(inputStr);
+			
+			// store computed duration
+			duration = computeDuration(WavParamReader.getNumberOfFrames(), WavParamReader.getFrameRate());
+		} catch (Exception e) {
+			throw new NotPlayableException(inputStr, "e");
+		}
+
 	}
 	
 	// store attributes of the song (author-title-album-duration) in an array

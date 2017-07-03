@@ -9,14 +9,18 @@ public abstract class SampledFile extends AudioFile {
 		super();
 	}
 	
-	public SampledFile(String inputStr) {
+	public SampledFile(String inputStr) throws NotPlayableException {
 		super(inputStr);
 	}
 
 	/* ------------------------------------------------- */
 	// start playing the song
-	public void play() {
-		BasicPlayer.play(getPathname());
+	public void play() throws NotPlayableException {
+		try {
+			BasicPlayer.play(getPathname());
+		} catch (Exception e) {
+			throw new NotPlayableException(getPathname(), e);
+		}
 	}
 	
 	// toggle pause
