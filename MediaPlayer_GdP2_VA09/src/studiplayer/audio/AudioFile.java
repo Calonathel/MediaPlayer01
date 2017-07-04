@@ -1,3 +1,4 @@
+package studiplayer.audio;
 import java.io.File;
 
 public abstract class AudioFile {

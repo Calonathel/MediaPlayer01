@@ -1,7 +1,13 @@
+package studiplayer.audio;
 import java.io.File;
 
 public class AudioFileFactory {
 
+	// empty constructor
+	public AudioFileFactory() {
+		
+	}
+	
 	// create a WavFile or TaggedFile based on path-endings
 	public static AudioFile getInstance (String pathname) throws NotPlayableException {
 		

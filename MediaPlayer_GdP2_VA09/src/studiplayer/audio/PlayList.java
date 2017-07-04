@@ -1,3 +1,4 @@
+package studiplayer.audio;
 import java.io.File;
 import java.io.FileWriter;
 
@@ -156,6 +157,27 @@ public class PlayList extends LinkedList<AudioFile> {
 			}
 		}
 	}
+	
+	// sort function for PlayList
+	public void sort(SortCriterion order) {
+		// author
+		if (order == SortCriterion.AUTHOR) {
+			Collections.sort(this, new AuthorComparator());
+		}
+		// title
+		if (order == SortCriterion.TITLE) {
+			Collections.sort(this, new TitleComparator());
+		}
+		// album
+		if (order == SortCriterion.ALBUM) {
+			Collections.sort(this, new AlbumComparator());
+		}
+		// duration
+		if (order == SortCriterion.DURATION) {
+			Collections.sort(this, new DurationComparator());
+		}
+	}
+	
 }
 	
 

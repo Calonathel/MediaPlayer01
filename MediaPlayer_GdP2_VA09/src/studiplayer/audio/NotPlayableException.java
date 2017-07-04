@@ -1,3 +1,4 @@
+package studiplayer.audio;
 
 @SuppressWarnings("serial")
 public class NotPlayableException extends Exception {
