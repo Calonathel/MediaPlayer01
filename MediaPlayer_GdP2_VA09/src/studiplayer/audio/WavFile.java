@@ -38,6 +38,8 @@ public class WavFile extends SampledFile {
 	
 	// store attributes of the song (author-title-album-duration) in an array
 	public String[] fields() {
+		// create new array
+		String[] store = new String[4];
 		// populate with tags
 		store[0] = getAuthor();
 		store[1] = getTitle();

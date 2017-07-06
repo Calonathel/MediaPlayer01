@@ -6,7 +6,7 @@ public class TaggedFile extends SampledFile {
 	
 	/* ------------------------------------------------- */
 	// locals
-	protected String album = null;
+	protected String album = "";
 
 	/* ------------------------------------------------- */
 	// Constructors
@@ -25,7 +25,7 @@ public class TaggedFile extends SampledFile {
 		
 		try {
 			// map the tags
-			Map<String, Object> tag_map = TagReader.readTags(inputPath);
+			Map<String, Object> tag_map = studiplayer.basic.TagReader.readTags(inputPath);
 			
 			// loop through the tags
 			for (String key : tag_map.keySet()) {
@@ -58,6 +58,8 @@ public class TaggedFile extends SampledFile {
 	
 	// store attributes of the song (author-title-album-duration) in an array
 	public String[] fields() {
+		// new array
+		String[] store = new String[4];
 		// populate with tags
 		store[0] = getAuthor();
 		store[1] = getTitle();

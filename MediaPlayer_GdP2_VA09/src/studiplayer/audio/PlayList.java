@@ -56,7 +56,7 @@ public class PlayList extends LinkedList<AudioFile> {
 	
 	// set random order for the playlist true or false
 	public void setRandomOrder(boolean randomOrder) {
-		if (randomOrder) {
+		if (randomOrder == true) {
 			randomOrderAttribute = true;
 			Collections.shuffle(this);
 		} else {
@@ -80,7 +80,7 @@ public class PlayList extends LinkedList<AudioFile> {
 			} else {
 				currentIndex = 0;
 				// if randomOrder is true, shuffle the playlist
-				if (randomOrderAttribute) {
+				if (randomOrderAttribute == true) {
 					setRandomOrder(true);
 				}
 			}
@@ -177,7 +177,6 @@ public class PlayList extends LinkedList<AudioFile> {
 			Collections.sort(this, new DurationComparator());
 		}
 	}
-	
 }
 	
 

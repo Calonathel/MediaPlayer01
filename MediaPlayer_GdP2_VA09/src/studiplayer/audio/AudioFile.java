@@ -9,10 +9,8 @@ public abstract class AudioFile {
 	protected String fileName = null;
 	protected String author = null;
 	protected String title = null;
-	protected String[] store = new String[4];
 	protected long duration = 0;
 
-	
 	/* ------------------------------------------------- */
 	// abstract functions
 	public abstract void play() throws NotPlayableException;
